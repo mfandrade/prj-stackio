@@ -1,0 +1,24 @@
+services:
+
+  webserver:
+    build: .
+    image: mfandrade/stackio:latest
+    ports:
+      - 8080:8080
+    secrets:
+      - connection
+
+  backend:
+    image: mariadb:11
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=true
+      - MARIADB_USER=dbuser
+      - MARIADB_PASSWORD_FILE=/run/secrets/db_password
+    secrets:
+      - db_password
+    ports:
+      - 3306:3306
+
+secrets:
+  connection:
+    file: connection.db
