@@ -1,7 +1,7 @@
 .PHONY: run build containertest
 
 
-run: dockerize/compose.yaml
+run: compose.yaml connection.db
 	docker compose up --build
 
 build:
