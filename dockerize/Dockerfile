@@ -10,5 +10,6 @@ COPY    --from=builder /go/bin/webserver /bin/webserver
 RUN ln -s /dev/stdout /log.txt
 WORKDIR /srv/myapp
 COPY    --chown=guest src .
+USER    guest
 CMD [ "/bin/webserver" ]
 EXPOSE 8080
