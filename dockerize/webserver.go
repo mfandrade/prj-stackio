@@ -1,9 +1,9 @@
 package main
 
 import (
-	"webserver/articlehandler"
 	"bufio"
 	"database/sql"
+	"dockerize/webserver/articlehandler"
 	"fmt"
 	"log"
 	"net/http"
@@ -83,4 +83,3 @@ func checkDB(t *time.Ticker, db *sql.DB) {
 		}
 	}
 }
-
