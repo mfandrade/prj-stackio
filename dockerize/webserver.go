@@ -21,7 +21,7 @@ func init() {
 		}
 		newLog.Close()
 	}
-	dbString := readConfig("server.confi")
+	dbString := readConfig("database.conf")
 	var err error
 	db, err := sql.Open("mysql", dbString)
 	check(err)
