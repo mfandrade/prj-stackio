@@ -1,7 +1,7 @@
 package main
 
 import (
-	"dockerize/webserver/articlehandler"
+	"webserver/articlehandler"
 	"bufio"
 	"database/sql"
 	"fmt"
@@ -30,7 +30,7 @@ func init() {
 	dbChecker := time.NewTicker(time.Minute)
 	articlehandler.PassDataBase(db)
 	go checkDB(dbChecker, db)
-	
+
 }
 
 func main() {
