@@ -5,20 +5,28 @@ services:
     image: mfandrade/stackio:latest
     ports:
       - 8080:8080
-    secrets:
-      - connection
+    volumes:
+      - ./database.pw:/var/tmp/database.pw
+    depends_on:
+      - backend
 
   backend:
     image: mariadb:11
     environment:
       - MARIADB_RANDOM_ROOT_PASSWORD=true
+      - MARIADB_DATABASE=db
       - MARIADB_USER=dbuser
-      - MARIADB_PASSWORD_FILE=/run/secrets/db_password
+      - MARIADB_PASSWORD_FILE=/run/secrets/mariadb_password
     secrets:
-      - db_password
+      - mariadb_password
     ports:
       - 3306:3306
+    volumes:
+      - mariadb_volume:/var/lb/mysql
 
 secrets:
-  connection:
-    file: connection.db
+  mariadb_password:
+    file: ./database.pw
+
+volumes:
+  mariadb_volume:
