@@ -1,4 +1,4 @@
-.PHONY: run build containertest
+.PHONY: run image containertest
 
 run: compose.yaml database.pw
 	docker compose up --build
@@ -7,9 +7,10 @@ database.pw:
 	@read -p "Set a password for the user 'dbuser' in MariaDB: " pw && \
 	echo -n $$pw > database.pw
 
-build:
-	docker image rm -f mfandrade/stackio:latest
-	docker image build -t mfandrade/stackio:latest .
+image:
+	docker image rm -f mfandrade/stackio-webserver:latest
+	docker image build -t mfandrade/stackio-webserver:latest .
+	docker image push mfandrade/stackio-webserver:latest
 
 containertest: build database.pw
 	docker container run \
