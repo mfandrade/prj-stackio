@@ -10,7 +10,7 @@ COPY    --from=builder /go/bin/webserver /bin/webserver
 RUN ln -s /dev/stdout /log.txt
 WORKDIR /srv/app
 USER    guest
-COPY    --chown=guest src ./html
+COPY    --chown=guest src ./src
 COPY    --chown=guest server.conf ./
 COPY    --chown=guest entrypoint.sh ./
 ENTRYPOINT [ "./entrypoint.sh" ]
