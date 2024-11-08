@@ -1,8 +1,12 @@
 .PHONY: run build containertest
 
 
-run: compose.yaml connection.db
+run: compose.yaml database.pw
 	docker compose up --build
+
+database.pw:
+	@read -p "Set a password for the user 'dbuser' in MariaDB: " pw && \
+	echo $$pw > database.pw
 
 build:
 	docker image rm -f mfandrade:latest
