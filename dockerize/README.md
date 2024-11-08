@@ -1,23 +1,16 @@
-# Task 1: Dockerize
-### Exercise Goals
+This task is part of a challenge for [Stack.io](https://www.stack.io).  The original content for this file was moved to [task-instructions.md]().
 
-This is your first task in out assignment. Here you are supposed to build a Dockfile with a Go Webserver within. 
+# Dockerize
 
-* Create a `Dockerfile`;
-  * Build `golang` executable inside your `Dockerfile`;
-  * Let the executable run as you load the image;
-* Build a `Docker` image using your `Dockerfile`;
-* Run your new created image and get a `200` HTTP Code once your container is running;
+Dockerize is a basic web server written in Golang that hosts a simple list management web application called "My Blog".
 
-### Expected Output
+![MY BLOG](https://placehold.co/600x400 "Screenshot of MY BLOG as hosted by Dockerize web server")
 
-Please, provide us with the `Dockerfile` you created. Your `Dockerfile` is supposed to:
-* Copy our source code inside this folder to the image;
-* Build the binary from our source code inside the image;
-* Run the binary at the end of the image;
+# tl;dr
 
-[Optional] You can also share screenshots of your progress.
-
-### Next steps?
-
-Once you complete this task, you can proceed to the [Kubernetes](../kubernetes) task;
+```
+git clone https://github.com/mfandrade/prj-stackio
+cd prj-stackio
+vi database.pw # SET THE DATABASE PASSWORD
+make
+```
