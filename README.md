@@ -1,3 +1,6 @@
+> :information_source: Check the [devel](https://github.com/mfandrade/prj-stackio/tree/devel) branch for the solution.
+---
+
 # This is a candidate assessment assignment from stack.io
 
 # Guideline
@@ -7,3 +10,4 @@ Welcome to our `Take Home Assingment`. We are going to provide you with a sequen
 * [Task 2](kubernetes): Deploy that docker image to your local k8s cluster following the given spec
 * [Task 3](terraform): Create a terraform module
 * [Task 4](linux): Write down a shell script for further automation
+
