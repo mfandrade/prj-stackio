@@ -8,7 +8,7 @@ database.pw:
 	echo -n $$pw > database.pw
 
 build:
-	docker image rm -f mfandrade:latest
+	docker image rm -f mfandrade/stackio:latest
 	docker image build -t mfandrade/stackio:latest .
 
 containertest: build database.pw
