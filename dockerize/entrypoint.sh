@@ -1,9 +1,9 @@
 #!/bin/sh
-PW=/var/tmp/database.pw
+PW=/run/secrets/mariadb_password
 CONF=/srv/app/server.conf
 
 if [ ! -f "$PW" ]; then
-  echo "ERROR: database.pw file not found" >/dev/stderr
+  echo "ERROR: $PW secret file not found" >/dev/stderr
   exit 1
 fi
 

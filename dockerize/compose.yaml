@@ -1,11 +1,13 @@
 services:
   webserver:
-    build: .
     image: mfandrade/stackio-webserver:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.webserver
     ports:
       - 8080:8080
-    volumes:
-      - ./database.pw:/var/tmp/database.pw
+    secrets:
+      - mariadb_password
     depends_on:
       - backend
     healthcheck:
@@ -24,19 +26,16 @@ services:
       start_period: 10s
 
   backend:
-    image: mariadb:11
+    image: mfandrade/stackio-backend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
     environment:
-      - MARIADB_RANDOM_ROOT_PASSWORD=true
-      - MARIADB_DATABASE=db
-      - MARIADB_USER=dbuser
       - MARIADB_PASSWORD_FILE=/run/secrets/mariadb_password
     secrets:
       - mariadb_password
     ports:
       - 3306:3306
-    volumes:
-      - mariadb_volume:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "-f", "localhost"]
       interval: 10s
@@ -47,6 +46,3 @@ services:
 secrets:
   mariadb_password:
     file: ./database.pw
-
-volumes:
-  mariadb_volume:

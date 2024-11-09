@@ -8,9 +8,11 @@ database.pw:
 	echo -n $$pw > database.pw
 
 image:
-	docker image rm -f mfandrade/stackio-webserver:latest
-	docker image build -t mfandrade/stackio-webserver:latest .
-	docker image push mfandrade/stackio-webserver:latest
+	@for image in webserver backend; do \
+		docker image rm -f mfandrade/stackio-$$image:latest ; \
+		docker image build -t mfandrade/stackio-$$image:latest . -f Dockerfile.$$image ; \
+		docker image push mfandrade/stackio-$$image:latest ; \
+	done
 
 containertest: build database.pw
 	docker container run \
