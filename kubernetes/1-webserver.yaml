@@ -20,3 +20,15 @@ spec:
           name: stackio-webserver
           ports:
             - containerPort: 8080
+          livenessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 30
+            httpGet:
+              path: /
+              port: 8080
+          readinessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            httpGet:
+              path: /
+              port: 8080
