@@ -18,6 +18,9 @@ spec:
       containers:
         - image: mfandrade/stackio-webserver:latest
           name: stackio-webserver
+          volumeMounts:
+            - name: secret-volume
+              mountPath: /run/secrets/mariadb_password
           ports:
             - containerPort: 8080
           livenessProbe:
@@ -32,3 +35,17 @@ spec:
             httpGet:
               path: /
               port: 8080
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: mariadb_password
+
+---
+kind:
+apiVersion: v1
+metadata:
+  name: mariadb_password
+  namespace: default
+type: Opaque
+data:
+  database.pw: UEA1NXdyMHJkIQo=
