@@ -1,7 +1,7 @@
 services:
   webserver:
     build: .
-    image: mfandrade/stackio:latest
+    image: mfandrade/stackio-webserver:latest
     ports:
       - 8080:8080
     volumes:
