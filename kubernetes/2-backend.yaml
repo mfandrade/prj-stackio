@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: stackio
+  creationTimestamp: null
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  strategy: {}
+  template:
+    metadata:
+      namespace: stackio
+      creationTimestamp: null
+      labels:
+        app: backend
+    spec:
+      containers:
+        - image: mfandrade/stackio-backend:latest
+          imagePullPolicy: Always
+          name: stackio-backend
+          ports:
+            - containerPort: 3306
+          resources: {}
+          volumeMounts:
+            - name: credentials-volume
+              mountPath: /mnt/credentials-volume
+              readOnly: true
+      volumes:
+        - name: credentials-volume
+          secret:
+            secretName: credentials
+status: {}
