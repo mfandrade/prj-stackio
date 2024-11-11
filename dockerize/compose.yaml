@@ -7,7 +7,7 @@ services:
     ports:
       - 8080:8080
     secrets:
-      - mariadb_password
+      - mariadb-password
     depends_on:
       - backend
     healthcheck:
@@ -20,10 +20,10 @@ services:
           "--spider",
           "http://localhost:8080",
         ]
-      interval: 60s
+      interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 3s
 
   backend:
     image: mfandrade/stackio-backend:latest
@@ -31,9 +31,9 @@ services:
       context: .
       dockerfile: Dockerfile.backend
     environment:
-      - MARIADB_PASSWORD_FILE=/run/secrets/mariadb_password
+      - MARIADB_PASSWORD_FILE=/run/secrets/mariadb-password
     secrets:
-      - mariadb_password
+      - mariadb-password
     ports:
       - 3306:3306
     healthcheck:
@@ -41,8 +41,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 3s
 
 secrets:
-  mariadb_password:
+  mariadb-password:
     file: ./database.pw

@@ -1,5 +1,5 @@
 #!/bin/sh
-PW=/run/secrets/mariadb_password
+PW=/run/secrets/mariadb-password
 CONF=/srv/app/server.conf
 
 if [ ! -f "$PW" ]; then
