@@ -29,6 +29,12 @@ spec:
             - name: credentials-volume
               mountPath: /mnt/credentials-volume
               readOnly: true
+          env:
+            - name: MARIADB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: MARIADB_PASSWORD
       volumes:
         - name: credentials-volume
           secret:
