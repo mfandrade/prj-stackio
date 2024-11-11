@@ -4,10 +4,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.webserver
+    environment:
+      - MARIADB_PASSWORD='123123qwe!'
     ports:
       - 8080:8080
-    secrets:
-      - mariadb-password
     depends_on:
       - backend
     healthcheck:
@@ -31,9 +31,7 @@ services:
       context: .
       dockerfile: Dockerfile.backend
     environment:
-      - MARIADB_PASSWORD_FILE=/run/secrets/mariadb-password
-    secrets:
-      - mariadb-password
+      - MARIADB_PASSWORD='123123qwe!'
     ports:
       - 3306:3306
     healthcheck:
@@ -42,7 +40,3 @@ services:
       timeout: 5s
       retries: 3
       start_period: 3s
-
-secrets:
-  mariadb-password:
-    file: ./database.pw

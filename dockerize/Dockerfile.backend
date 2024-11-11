@@ -4,5 +4,4 @@ ENV MARIADB_RANDOM_ROOT_PASSWORD=true \
     MARIADB_DATABASE=db \
     MARIADB_USER=dbuser
 COPY    init.sql /docker-initdb-entrypoint.d/
-# VOLUME  mariadb_volume
 EXPOSE  3306

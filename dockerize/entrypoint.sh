@@ -1,13 +1,11 @@
 #!/bin/sh
-PW=/run/secrets/mariadb-password
-CONF=/srv/app/server.conf
-
-if [ ! -f "$PW" ]; then
-  echo "ERROR: $PW secret file not found" >/dev/stderr
+if [ -z "$MARIADB_PASSWORD" ]; then
+  echo "ERROR: MARIADB_PASSWORD not defined" >/dev/stderr
   exit 1
 fi
+CONF=/srv/app/server.conf
 
-PASS=$(cat "$PW")
+PASS=$MARIADB_PASSWORD
 PASS_=$(printf '%s\n' "$PASS" | sed 's/:/%3A/g; s/\//%2F/g')
 echo "dbuser:$PASS_@tcp(backend:3306)/db" >"$CONF"
 
