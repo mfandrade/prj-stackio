@@ -40,3 +40,17 @@ spec:
           secret:
             secretName: credentials
 status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-srv
+  namespace: stackio
+spec:
+  type: ClusterIP
+  selector:
+    app: backend
+  ports:
+    - port: 3306
+      protocol: TCP

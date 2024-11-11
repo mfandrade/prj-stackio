@@ -40,3 +40,17 @@ spec:
           secret:
             secretName: credentials
 status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver-srv
+  namespace: stackio
+spec:
+  type: NodePort
+  selector:
+    app: webserver
+  ports:
+    - port: 8080
+      nodePort: 30080
