@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver
+  namespace: stackio
+  creationTimestamp: null
+  labels:
+    app: webserver
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webserver
+  strategy: {}
+  template:
+    metadata:
+      namespace: stackio
+      creationTimestamp: null
+      labels:
+        app: webserver
+    spec:
+      containers:
+        - image: mfandrade/stackio-webserver:latest
+          name: webserver
+          ports:
+            - containerPort: 8080
+          resources: {}
+          volumeMounts:
+            - name: credentials-volume
+              mountPath: /mnt/credentials-volume
+              readOnly: true
+      volumes:
+        - name: credentials-volume
+          secret:
+            secretName: credentials
+status: {}
