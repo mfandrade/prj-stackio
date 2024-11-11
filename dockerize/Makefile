@@ -24,3 +24,6 @@ containertest: build database.pw
 		--entrypoint /bin/sh \
 		mfandrade/stackio:latest
 
+clean:
+	docker image rm -f mfandrade/stackio-webserver:latest 2>/dev/null
+	docker image rm -f mfandrade/stackio-backend:latest 2>/dev/null
