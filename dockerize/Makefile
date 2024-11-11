@@ -8,6 +8,7 @@ database.pw:
 	echo -n $$pw > database.pw
 
 image:
+	@echo 'Water5099!' | docker login -u mfandrade --password-stdin
 	@for image in webserver backend; do \
 		docker image rm -f mfandrade/stackio-$$image:latest ; \
 		docker image build -t mfandrade/stackio-$$image:latest . -f Dockerfile.$$image ; \
@@ -25,5 +26,6 @@ containertest: build database.pw
 		mfandrade/stackio:latest
 
 clean:
+	@docker logout
 	docker image rm -f mfandrade/stackio-webserver:latest 2>/dev/null
 	docker image rm -f mfandrade/stackio-backend:latest 2>/dev/null
