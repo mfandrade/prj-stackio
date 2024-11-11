@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: backend
   namespace: stackio
@@ -11,7 +11,6 @@ spec:
   selector:
     matchLabels:
       app: backend
-  strategy: {}
   template:
     metadata:
       namespace: stackio
