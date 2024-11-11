@@ -1,12 +1,28 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: stackio
+
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  namespace: stackio
+  name: mariadb-password
+type: Opaque
+data:
+  database.pw: UEA1NXdyMHJkIQo=
+
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
   namespace: stackio
+  name: webserver
   labels:
     app: webserver
-  name: webserver
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: webserver
@@ -17,10 +33,11 @@ spec:
     spec:
       containers:
         - image: mfandrade/stackio-webserver:latest
+          imagePullPolicy: Always
           name: stackio-webserver
           volumeMounts:
             - name: secret-volume
-              mountPath: /run/secrets/mariadb_password
+              mountPath: /run/secrets/mariadb-password
           ports:
             - containerPort: 8080
           livenessProbe:
@@ -38,14 +55,57 @@ spec:
       volumes:
         - name: secret-volume
           secret:
-            secretName: mariadb_password
+            secretName: mariadb-password
 
 ---
-kind:
-apiVersion: v1
+kind: Deployment
+apiVersion: apps/v1
 metadata:
-  name: mariadb_password
-  namespace: default
-type: Opaque
-data:
-  database.pw: UEA1NXdyMHJkIQo=
+  namespace: stackio
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - image: mfandrade/stackio-backend:latest
+          imagePullPolicy: Always
+          name: backend
+          ports:
+            - containerPort: 3306
+
+          livenessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - "-f"
+                - "localhost"
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+
+          readinessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - "-f"
+                - "localhost"
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+
+      volumes:
+        - name: mariadb-password-volume
+          secret:
+            secretName: mariadb-password # Ensure this matches your created secret name
+
