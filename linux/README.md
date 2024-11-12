@@ -22,11 +22,11 @@ Please, provide us with a file named `automation.sh` you created. Your
 `automation.sh` is supposed to:
 
 - Build your `Dockerfile`;
-- Tag your image dinacally;
+- Tag your image dinamically;
 - Create a new `new-app.yaml` file;
 - Compare the `new-app.yaml` with your current state in your `minikube`;
 
-Please, provide us with your `script.yml` and `new-app.yaml` files;
+Please, provide us with your `script.yaml` and `new-app.yaml` files;
 
 [Optional] You can also share screenshots of your progress.
 
