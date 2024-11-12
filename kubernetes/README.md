@@ -31,7 +31,7 @@ Please, provide us with a file named `app.yaml` you are going to create. Your
 
 [Optional] You can also share screenshots of your progress.
 
-# Solution:
+# Solution
 
 0. Ensure minikube has started
 1. Apply all yaml files in this directory
