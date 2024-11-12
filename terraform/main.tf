@@ -112,3 +112,65 @@ resource "kubernetes_service" "backend" {
   }
 }
 
+resource "kubernetes_deployment" "stackio_webserver" {
+  metadata {
+    name      = "stackio-webserver"
+    namespace = kubernetes_namespace.stackio.metadata[0].name
+    labels = {
+      app = "webserver"
+    }
+  }
+
+  spec {
+    replicas = 2
+
+    selector {
+      match_labels = {
+        app = "webserver"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "webserver"
+        }
+      }
+
+      spec {
+        container {
+          name  = "webserver"
+          image = "mfandrade/stackio-webserver:latest"
+
+          port {
+            container_port = 8080
+          }
+
+          env {
+            name = "MARIADB_PASSWORD"
+            value_from {
+              secret_key_ref {
+                name = kubernetes_secret.credentials.metadata[0].name
+                key  = "MARIADB_PASSWORD"
+              }
+            }
+          }
+
+          volume_mount {
+            name       = "credentials-volume"
+            mount_path = "/mnt/credentials-volume"
+            read_only  = true
+          }
+        }
+
+        volume {
+          name = "credentials-volume"
+
+          secret {
+            secret_name = kubernetes_secret.credentials.metadata[0].name
+          }
+        }
+      }
+    }
+  }
+}
