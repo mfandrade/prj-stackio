@@ -92,3 +92,23 @@ resource "kubernetes_stateful_set" "stackio_backend" {
   }
 }
 
+resource "kubernetes_service" "backend" {
+  metadata {
+    name      = "backend"
+    namespace = kubernetes_namespace.stackio.metadata[0].name
+  }
+
+  spec {
+    type = "ClusterIP"
+
+    selector = {
+      app = "backend"
+    }
+
+    port {
+      port     = 3306
+      protocol = "TCP"
+    }
+  }
+}
+
