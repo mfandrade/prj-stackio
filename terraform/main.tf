@@ -23,7 +23,7 @@ resource "kubernetes_secret" "credentials" {
     namespace = kubernetes_namespace.stackio.metadata[0].name
   }
   data = {
-    MARIADB_PASSWORD = "stackio"
+    MARIADB_PASSWORD = "UEA1NXcwcmQh"
   }
 }
 
