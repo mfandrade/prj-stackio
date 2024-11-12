@@ -1,7 +1,8 @@
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: backend
+  name: stackio-backend
   namespace: stackio
   creationTimestamp: null
   labels:
@@ -45,7 +46,7 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-srv
+  name: backend
   namespace: stackio
 spec:
   type: ClusterIP

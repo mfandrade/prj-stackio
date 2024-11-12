@@ -1,7 +1,8 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webserver
+  name: stackio-webserver
   namespace: stackio
   creationTimestamp: null
   labels:
@@ -45,12 +46,17 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  name: webserver-srv
-  namespace: stackio
-spec:
-  type: NodePort
-  selector:
+  creationTimestamp: null
+  labels:
     app: webserver
+  name: webserver
+spec:
   ports:
     - port: 8080
-      nodePort: 30080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: webserver
+  type: LoadBalancer
+status:
+  loadBalancer: {}
