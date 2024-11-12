@@ -174,3 +174,25 @@ resource "kubernetes_deployment" "stackio_webserver" {
     }
   }
 }
+resource "kubernetes_service" "webserver" {
+  metadata {
+    name      = "webserver"
+    namespace = kubernetes_namespace.stackio.metadata[0].name
+    labels = {
+      app = "webserver"
+    }
+  }
+
+  spec {
+    type = "LoadBalancer"
+
+    selector = {
+      app = "webserver"
+    }
+
+    port {
+      port     = 8080
+      protocol = "TCP"
+    }
+  }
+}
