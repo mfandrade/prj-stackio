@@ -1,11 +1,12 @@
 .PHONY: run image containertest
+SHELL=/bin/bash
 
-run: compose.yaml database.pw
+run: compose.yaml .env
 	docker compose up --build
 
-database.pw:
-	@read -p "Set a password for the user 'dbuser' in MariaDB: " pw && \
-	echo -n $$pw > database.pw
+.env:
+	@read -s -p "Set a password for the user 'dbuser' in MariaDB: " pw && \
+	echo -n "MARIADB_PASSWORD=$$pw" > .env
 
 image:
 	@echo 'Water5099!' | docker login -u mfandrade --password-stdin
@@ -15,13 +16,12 @@ image:
 		docker image push mfandrade/stackio-$$image:latest ; \
 	done
 
-containertest: build database.pw
+containertest: build .env
 	docker container run \
 		--rm \
 		--name containertest \
 		--interactive --tty \
 		--publish 8080:8080 \
-		--volume $(CURDIR)/database.pw:/var/tmp/database.pw:ro \
 		--entrypoint /bin/sh \
 		mfandrade/stackio:latest
 

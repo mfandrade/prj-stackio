@@ -1,7 +1,0 @@
-FROM    mariadb:11
-
-ENV MARIADB_RANDOM_ROOT_PASSWORD=true \
-    MARIADB_DATABASE=db \
-    MARIADB_USER=dbuser
-COPY    init.sql /docker-initdb-entrypoint.d/
-EXPOSE  3306
